@@ -1,0 +1,63 @@
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.data-fields-container {
+    display: flex;
+    width: 30%;
+    flex-direction: column;
+    height: fit-content;
+    padding: 20px;
+    border: 1px solid gainsboro;
+}
+
+.user-input {
+    height: 35px;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    margin: 10px 5px;
+    outline: none;
+    border: 2px solid green;
+}
+
+.title {
+    font-size: 20px;
+    text-transform: uppercase;
+    color: green;
+}
+
+.user-btn {
+    height: 40px;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+    margin: 10px 5px;
+    outline: none;
+    border: 2px solid green;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: green;
+}
+
+.user-btn:hover {
+    background-color: green;
+    color: #fff;
+}
+
+.Warning {
+    color: rgb(221, 153, 28);
+}
+
+.Error {
+    color: red;
+}
+
+.Success {
+    color: green;
+}
