@@ -28,37 +28,25 @@ const client = new mongoose.Schema({
     }, city: {
         type: String,
         default: null
-    },
-    type: {
-        type: String,
-        default: 'user'
-    },
-    hospital: {
-        type: String,
-        default: null
-    },
-    hospital_phone_no: {
-        type: String,
-        default: null
-    },
-    treatment: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Specialization'
-    }]
+    }
 
 })
 
-const specalization = new mongoose.Schema({
-    name: String,
-    doctor_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Client'
-    }
+const cars = new mongoose.Schema({
+
+    modal: String,
+    color: String,
+    owner: { type: String, require: true, immutable: true },
+    registration: { type: String, require: true, immutable: true },
+    Year: String,
+    name: { type: String, require: true }
+
+
 })
 
 const Client = mongoose.model('Client', client)
-const Specialization = mongoose.model('Specialization', specalization)
+const Cars = mongoose.model('Cars', cars)
 
 export {
-    Client, Specialization
+    Client, Cars
 }

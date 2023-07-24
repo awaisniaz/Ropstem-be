@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { Client, Specialization } from "../models/client";
+import { Client } from "../models/client";
 import { utilities } from "../utilities/utils";
 const client_Controller = {
     login: async (req: Request, res: Response) => {
         const { email, password } = req?.body
-        const user = await Client?.findOne({ email: email }).populate('treatment', 'name').exec()
+        const user = await Client?.findOne({ email: email })
         if (!user) {
             return res.send({ message: "User Not Exist with this email" })
         }
@@ -22,38 +22,18 @@ const client_Controller = {
         }
     },
     register: async (req: Request, res: Response) => {
-        const { client, specialization } = req.body;
-        const password = await utilities?.generatePassword(client?.password)
+        const { client } = req.body;
+        const alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*_-=+";
+        const integers = 8;
+        const autoPassword = utilities?.AutoPassord(integers, alpha)
+        const password = await utilities?.generatePassword(autoPassword)
+        console.log(autoPassword)
         const newClient = new Client({ ...client, password: password });
         newClient
             .save()
             .then((data) => {
-                if (data?.type == "user") {
-                    res.status(201).json({ message: "User Created Successfully" });
-                } else {
-                    console.log(data)
-                    const specializationlist = specialization?.split(',')?.map((item: string) => {
-                        return {
-                            name: item,
-                            doctor_id: data?._id
-                        }
-                    })
-                    Specialization.insertMany(specializationlist)
-                        .then((specializations) => {
-                            const specializationIds = specializations?.map((item: any) => {
-                                return item?._id
-                            })
-                            Client?.findByIdAndUpdate({ _id: data?._id }, { treatment: specializationIds }).then(() => {
-                                res.status(201).json({ message: "User Created Successfull" });
-                            }).catch(err => {
-                                res.status(500).json({ message: err.message });
-                            })
-
-                        })
-                        .catch((err: Error) => {
-                            res.status(500).json({ message: err.message });
-                        });
-                }
+                utilities.sendMail(req.body.email, autoPassword)
+                res.status(201).json({ "message": "You register Successfully" })
             })
             .catch((err: Error) => {
                 console.log(err)

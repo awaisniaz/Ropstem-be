@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import nodemailer from "nodemailer";
 export const utilities = {
     generatePassword: async (password: string): Promise<string> => {
         let saltRounds = 10
@@ -28,6 +29,34 @@ export const utilities = {
                 }
             });
         });
+    }
+    , sendMail: async (mail, password) => {
+        const transporter = nodemailer.createTransport({
+            host: "smtp.forwardemail.net",
+            port: 465,
+            secure: true,
+            auth: {
+                // TODO: replace `user` and `pass` values from <https://forwardemail.net>
+                user: 'your mail',
+                pass: 'passsrod'
+            }
+        });
+        const info = await transporter.sendMail({
+            from: '"Fred Foo 👻"your mail', // sender address
+            to: mail, // list of receivers
+            subject: "Hello ✔", // Subject line
+            text: `your first time Passord ${password}`, // plain text body
+            html: "<b>Hello world?</b>", // html body
+        });
+
+        console.log("Message sent: %s", info.messageId);
+    },
+    AutoPassord: (length, chars) => {
+        let password = "";
+        for (let i = 0; i < length; i++) {
+            password += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return password
     }
 
 }

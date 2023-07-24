@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "set NODE_OPTIONS=--max-old-space-size=8192 && npx tsc && nodemon dist/server.js",
-    "start:prod":"nodemon --watch 'src/*.ts' --exec ts-node src/server.ts"
+    "start:prod": "nodemon --watch 'src/*.ts' --exec ts-node src/server.ts"
   },
   "keywords": [
     "Doctor Management System",
@@ -30,6 +30,7 @@
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.2.2",
     "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.4",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"
   }

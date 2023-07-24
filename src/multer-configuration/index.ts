@@ -20,10 +20,15 @@ const fileFilter = (req: any, file: any, cb: any) => {
     const allowedExtensions = ['.jpg', '.jpeg', '.png'];
     const fileExtension = file.originalname.toLowerCase().slice(-4);
     const isAllowed = allowedExtensions.includes(fileExtension);
-    if (isAllowed) {
-        cb(null, true);
+    const fileUpload = file.fieldname == "document" ? true : false
+    if (fileUpload == true) {
+        cb(null, true)
     } else {
-        cb(new Error('Only .jpg, .jpeg, and .png files are allowed!'), false);
+        if (isAllowed) {
+            cb(null, true);
+        } else {
+            cb(new Error('Only .jpg, .jpeg, and .png files are allowed!'), false);
+        }
     }
 };
 
